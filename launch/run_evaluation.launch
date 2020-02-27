@@ -1,0 +1,18 @@
+<launch>
+    <arg name="heading" default="106" />
+   
+    <!--- Sim Time -->
+    <param name="/use_sim_time" value="true" />
+
+    <!--- Config Path -->
+    <arg name="config_path" default = "$(find kflio)/config/lins_evaluator_config.yaml" />
+    
+    <!--- Evaluator -->    
+    <node pkg="kflio" type="drift_evaluation_node"    name="drift_evaluation_node"    output="screen">
+        <param name="errorType" value="RDM" /> <!-- options: RDM ATE KITTI -->
+        <param name="heading" value="$(arg heading)" />
+        <param name="config_file" type="string" value="$(arg config_path)" />
+    </node>
+
+</launch>
+

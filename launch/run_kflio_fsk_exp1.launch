@@ -1,0 +1,34 @@
+<launch>
+    
+    <!--- Sim Time -->
+    <param name="/use_sim_time" value="true" />
+    
+    <!--- Run Rviz-->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find kflio)/config/rviz_config/kflio_port.rviz" />
+ 
+    <!--- TF -->
+    <node pkg="tf" type="static_transform_publisher" name="camera_init_to_map"  args="0 0 0 1.570795   0        1.570795 /map    /camera_init 10" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_camera" args="0 0 0 -1.570795 -1.570795 0        /camera /base_link   10" />
+    
+    <!--- Config Path -->
+    <arg name="config_path" default = "$(find kflio)/config/kflio_fsk_exp1_config.yaml" />
+    
+    <!--- Kf-LIO -->   
+    <node pkg="kflio" type="feature_extraction_node"    name="feature_extraction_node"    output="screen">
+        <param name="config_file" type="string" value="$(arg config_path)" />
+    </node>
+
+    <node pkg="kflio" type="transform_fusion_node"    name="transform_fusion_node"    output="screen">
+        <param name="config_file" type="string" value="$(arg config_path)" />
+    </node>
+    
+    <node pkg="kflio" type="kflio_node"    name="kflio_node"    output="screen">
+        <param name="config_file" type="string" value="$(arg config_path)" />
+    </node>
+    
+    <node pkg="kflio" type="lidar_mapping_node"     name="lidar_mapping_node"     output="screen">
+        <param name="config_file" type="string" value="$(arg config_path)" />
+    </node>
+
+</launch>
+

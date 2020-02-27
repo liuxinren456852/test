@@ -1,0 +1,16 @@
+<launch>
+    
+    <!--- Sim Time -->
+    <param name="/use_sim_time" value="true" />
+    
+    <!--- Config Path -->
+    <arg name="config_path" default = "$(find kflio)/config/kflio_test_range_image_config.yaml" />
+    
+    <!--- Kf-LIO -->   
+    <node pkg="kflio" type="range_image_node"    name="range_image_node"    output="screen">
+        <param name="config_file" type="string" value="$(arg config_path)" />
+    </node>
+
+
+</launch>
+
